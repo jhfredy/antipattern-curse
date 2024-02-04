@@ -22,10 +22,8 @@ class SessionTest extends TestCase
                 'total' => '10000'
             ]
         ];
-        $returnUrl = 'http://localhost:8000/return';
-        $expiration = date('c', strtotime('+2 days'));
 
-        $response = $session->create_session_to_webcheckout_service($payment, $expiration, $returnUrl);
+        $response = $session->create_session_to_webcheckout_service($payment);
         dump($response);
         $this->assertArrayHasKey('status',$response);
         $this->assertEquals('OK',$response['status']['status']);
@@ -44,10 +42,8 @@ class SessionTest extends TestCase
                 'total' => '10000'
             ]
         ];
-        $returnUrl = 'http://localhost:8000/return';
-        $expiration = date('c', strtotime('+2 days'));
 
-        $response = $session->create_session_to_webcheckout_service($payment, $expiration, $returnUrl);
+        $response = $session->create_session_to_webcheckout_service($payment);
 
         $this->assertArrayHasKey('status',$response);
         $this->assertEquals('OK',$response['status']['status']);
@@ -64,7 +60,7 @@ class SessionTest extends TestCase
     public function test_it_can_get_information_from_approved_session_and_can_reverse()
     {
         $session = new Session();
-        $session_id = 35;
+        $session_id = 67;
         $responseGetSession = $session->get_information_from_webcheckout_service($session_id);
         $internalReference = $responseGetSession['payment'][0]['internalReference'];
         $this->assertEquals($session_id,$responseGetSession['requestId']);
