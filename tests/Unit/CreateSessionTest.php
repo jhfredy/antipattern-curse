@@ -15,7 +15,7 @@ class CreateSessionTest extends TestCase
      */
     public function test_it_can_create_session()
     {
-        $mockedResponse = json_decode(file_get_contents('tests/Mocks/create_session.json'),true);
+        $mockedResponse = json_decode(file_get_contents(base_path('tests/Mocks/create_session.json')),true);
         $createSession = new CreateSession(['payment' => [
             'reference' => '123456',
             'description' => 'Testing',

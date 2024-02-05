@@ -16,7 +16,7 @@ class ReverseTransactionTest extends TestCase
      */
     public function test_it_can_reverse_transaction()
     {
-        $mockedResponse = json_decode(file_get_contents('tests/Mocks/process_reverse.json'),true);
+        $mockedResponse = json_decode(file_get_contents(base_path('tests/Mocks/process_reverse.json')),true);
         $internalReference = 10;
         $reverseTransaction = new ReversePayment($internalReference);
 
@@ -29,6 +29,4 @@ class ReverseTransactionTest extends TestCase
         $this->assertArrayHasKey('status',$response);
         $this->assertEquals('APPROVED',$response['status']['status']);
     }
-
-
 }

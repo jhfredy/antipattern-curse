@@ -16,7 +16,7 @@ class InformationSessionTest extends TestCase
      */
     public function test_it_can_get_pending_information(): void
     {
-        $mockedResponse = json_decode(file_get_contents('tests/Mocks/get_information.json'),true);
+        $mockedResponse = json_decode(file_get_contents(base_path('tests/Mocks/get_information.json')),true);
         $sessionId = 79;
         $getInformation = new GetInformation($sessionId);
 
@@ -34,7 +34,7 @@ class InformationSessionTest extends TestCase
 
     public function test_it_can_get_approved_information()
     {
-        $mockedResponse = json_decode(file_get_contents('tests/Mocks/get_approved_information.json'),true);
+        $mockedResponse = json_decode(file_get_contents(base_path('tests/Mocks/get_approved_information.json')),true);
         $sessionId = 78;
         $getInformation = new GetInformation($sessionId);
 
