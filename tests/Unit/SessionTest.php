@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Antipattern\Session;
 use App\Services\WebcheckoutService;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class SessionTest extends TestCase
@@ -13,6 +14,10 @@ class SessionTest extends TestCase
      */
     public function test_it_can_create_session()
     {
+        Http::fake(function (Request $request) {
+            return Http::response('Hello World', 200);
+        });
+
         $session = new Session();
         $payment = [
             'reference' => 'TEST_1000',
@@ -24,7 +29,7 @@ class SessionTest extends TestCase
         ];
 
         $response = $session->create_session_to_webcheckout_service($payment);
-        dump($response);
+        dd($response);
         $this->assertArrayHasKey('status',$response);
         $this->assertEquals('OK',$response['status']['status']);
         $this->assertArrayHasKey('requestId',$response);
