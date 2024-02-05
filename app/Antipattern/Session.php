@@ -2,6 +2,7 @@
 
 namespace App\Antipattern;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class Session
@@ -32,11 +33,16 @@ class Session
         ];
 
 
-        $client = new \GuzzleHttp\Client();
-        $res = $client->request('post',$url,[
-            'json' => $session,
-            'verify' => false
-        ]);
+        $res = Http::withOptions([
+            'verify' => false,
+        ])->post($url, $session);
+
+//        $client = new \GuzzleHttp\Client();
+
+//        $res = $client->request('post',$url,[
+//            'json' => $session,
+//            'verify' => false
+//        ]);
 
         if($res){
             if($res->getStatusCode() == 200){
@@ -62,7 +68,7 @@ class Session
         $tra = base64_encode(hash('sha1',$non.$se.$tra,true));
         $url = "https://checkout.redirection.test/api/session/".$id;
 
-        $auth = [
+        $data = [
             'auth' => [
                 'login' => $log,
                 'tranKey' => $tra,
@@ -71,11 +77,14 @@ class Session
             ]
         ];
 
-        $client = new \GuzzleHttp\Client();
-        $res = $client->request('post',$url,[
-            'json' => $auth,
-            'verify' => false
-        ]);
+        $res = Http::withOptions([
+            'verify' => false,
+        ])->post($url, $data);
+//        $client = new \GuzzleHttp\Client();
+//        $res = $client->request('post',$url,[
+//            'json' => $data,
+//            'verify' => false
+//        ]);
 
         if($res){
             if($res->getStatusCode() == 200){
@@ -101,7 +110,7 @@ class Session
         $tra = base64_encode(hash('sha1', $non . $se . $tra, true));
         $url = "https://checkout.redirection.test/api/reverse";
 
-        $auth = [
+        $data = [
             'auth' => [
                 'login' => $log,
                 'tranKey' => $tra,
@@ -111,11 +120,15 @@ class Session
             'internalReference' => $ref
         ];
 
-        $client = new \GuzzleHttp\Client();
-        $res = $client->request('post', $url, [
-            'json' => $auth,
-            'verify' => false
-        ]);
+        $res = Http::withOptions([
+            'verify' => false,
+        ])->post($url, $data);
+
+//        $client = new \GuzzleHttp\Client();
+//        $res = $client->request('post', $url, [
+//            'json' => $auth,
+//            'verify' => false
+//        ]);
 
         if($res){
             if($res->getStatusCode() == 200){
