@@ -2,9 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Antipattern\Session;
-use App\Domain\Services\Placetopay\CreateSession;
-use App\Domain\Services\Placetopay\RedirectionService;
+use App\Domain\Services\WebcheckoutService;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
@@ -16,7 +14,7 @@ class CreateSessionTest extends TestCase
     public function test_it_can_create_session()
     {
         $mockedResponse = json_decode(file_get_contents(base_path('tests/Mocks/create_session.json')),true);
-        $createSession = new CreateSession(['payment' => [
+        $createSession = (new WebcheckoutService())->createSession(['payment' => [
             'reference' => '123456',
             'description' => 'Testing',
             'amount' => [

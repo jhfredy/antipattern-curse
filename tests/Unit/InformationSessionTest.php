@@ -2,10 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Antipattern\Session;
-use App\Domain\Services\Placetopay\CreateSession;
-use App\Domain\Services\Placetopay\GetInformation;
-use App\Domain\Services\Placetopay\RedirectionService;
+use App\Domain\Services\WebcheckoutService;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
@@ -18,7 +15,7 @@ class InformationSessionTest extends TestCase
     {
         $mockedResponse = json_decode(file_get_contents(base_path('tests/Mocks/get_information.json')),true);
         $sessionId = 79;
-        $getInformation = new GetInformation($sessionId);
+        $getInformation = (new WebcheckoutService())->getInformation($sessionId);
 
         Http::fake([
             $getInformation->url() => Http::response($mockedResponse),
@@ -36,7 +33,7 @@ class InformationSessionTest extends TestCase
     {
         $mockedResponse = json_decode(file_get_contents(base_path('tests/Mocks/get_approved_information.json')),true);
         $sessionId = 78;
-        $getInformation = new GetInformation($sessionId);
+        $getInformation = (new WebcheckoutService())->getInformation($sessionId);
 
         Http::fake([
             $getInformation->url() => Http::response($mockedResponse),

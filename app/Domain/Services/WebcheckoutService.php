@@ -9,18 +9,18 @@ use App\Domain\Services\Placetopay\ReversePayment;
 class WebcheckoutService
 {
 
-    public function createSession(array $data)
+    public function createSession(array $data): CreateSession
     {
-        return (new CreateSession($data))->request();
+        return (new CreateSession($data));
     }
 
-    public function getInformation(int $session_id)
+    public function getInformation(int $session_id): GetInformation
     {
-        return (new GetInformation($session_id))->request();
+        return (new GetInformation($session_id));
     }
 
-    public function reverseTransaction(int $internalReference)
+    public function reverseTransaction(int $internalReference): ReversePayment
     {
-        return (new ReversePayment($internalReference))->request();
+        return (new ReversePayment($internalReference));
     }
 }
